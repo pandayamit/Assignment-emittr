@@ -1,4 +1,4 @@
-# 🚀 WorkFlowser
+# 🚀 WorkBuilder
 
 > **Build beautiful workflows visually!** ✨
 
