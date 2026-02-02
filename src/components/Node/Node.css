@@ -1,0 +1,526 @@
+/**
+ * Node Component Styles
+ * Premium Floating Cards with Glass Morphism
+ * Node height MUST match LAYOUT.NODE_HEIGHT constant (110px)
+ */
+
+/* ============================================
+   BASE NODE STYLES - PREMIUM REDESIGN
+   ============================================ */
+
+.node {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 180px;
+  height: 110px; /* MUST match LAYOUT.NODE_HEIGHT */
+  background: var(--node-gradient);
+  border: 1px solid var(--node-border);
+  border-radius: 16px;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+  animation: nodeAppear 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Node appear animation */
+@keyframes nodeAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.85) translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Node disappear animation - applied via JS before removal */
+.node--deleting {
+  animation: nodeDisappear 0.4s ease-in forwards;
+  pointer-events: none;
+}
+
+@keyframes nodeDisappear {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.08);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+
+.node:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(6, 182, 212, 0.15),
+    0 0 0 1px rgba(6, 182, 212, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.node--selected {
+  box-shadow:
+    0 0 0 3px rgba(6, 182, 212, 0.6),
+    0 12px 40px rgba(6, 182, 212, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* ============================================
+   NODE TYPE VARIANTS - ENHANCED
+   ============================================ */
+
+.node--start {
+  border-radius: 20px;
+}
+
+.node--end {
+  border-radius: 20px;
+}
+
+.node--branch {
+  border-radius: 16px;
+  width: 190px;
+  height: 120px; /* Branch slightly taller */
+}
+
+/* ============================================
+   NODE CONTENT
+   ============================================ */
+
+.node-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  width: 100%;
+  height: 100%;
+  color: white;
+  text-align: center;
+  gap: 4px;
+}
+
+.node-icon {
+  width: 18px;
+  height: 18px;
+  opacity: 0.9;
+}
+
+.node-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ============================================
+   LABEL CONTAINER
+   ============================================ */
+
+.node-label-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+}
+
+.node-label {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  line-height: 1.3;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.node-type {
+  font-size: 10px;
+  font-weight: 400;
+  opacity: 0.6;
+  text-transform: capitalize;
+  text-align: center;
+  width: 100%;
+}
+
+/* ============================================
+   EDIT BUTTON (PENCIL ICON)
+   ============================================ */
+
+.node-edit-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  color: rgba(255, 255, 255, 0.6);
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: var(--radius-sm);
+  padding: 2px;
+  opacity: 0;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.node-edit-btn svg {
+  width: 100%;
+  height: 100%;
+}
+
+.node:hover .node-edit-btn {
+  opacity: 1;
+}
+
+.node-edit-btn:hover {
+  color: white;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================
+   NODE INPUT (EDIT MODE)
+   ============================================ */
+
+.node-input {
+  width: 100%;
+  max-width: 140px;
+  padding: 4px 8px;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  text-align: center;
+  color: white;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: var(--radius-sm);
+}
+
+.node-input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.7);
+  background: rgba(0, 0, 0, 0.35);
+}
+
+/* ============================================
+   DELETE BUTTON
+   ============================================ */
+
+.node-delete {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  color: white;
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: var(--z-dropdown);
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+}
+
+.node-delete svg {
+  width: 10px;
+  height: 10px;
+}
+
+.node:hover .node-delete {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.node-delete:hover {
+  background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
+  transform: scale(1.15);
+  box-shadow: 0 4px 16px rgba(239, 68, 68, 0.5);
+}
+
+/* ============================================
+   INTERNAL ADD BUTTON - Modern Glassmorphism
+   ============================================ */
+
+.node-add-internal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 6px;
+  padding: 6px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: rgba(255, 255, 255, 0.85);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 20px;
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.node-add-internal::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.node-add-internal svg {
+  width: 12px;
+  height: 12px;
+  transition: transform 0.3s ease;
+}
+
+.node-add-internal:hover {
+  color: white;
+  background: linear-gradient(
+    135deg,
+    rgba(6, 182, 212, 0.4) 0%,
+    rgba(16, 185, 129, 0.3) 100%
+  );
+  border-color: rgba(6, 182, 212, 0.6);
+  box-shadow:
+    0 4px 16px rgba(6, 182, 212, 0.25),
+    0 0 20px rgba(6, 182, 212, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.node-add-internal:hover::before {
+  left: 100%;
+}
+
+.node-add-internal:hover svg {
+  transform: scale(1.1);
+}
+
+.node-add-internal:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow:
+    0 2px 8px rgba(6, 182, 212, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* ============================================
+   BRANCH ADD BUTTONS (INTERNAL)
+   ============================================ */
+
+.node-branch-buttons {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-top: 6px;
+}
+
+.node-branch-add {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  border-radius: 6px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+}
+
+.node-branch-add svg {
+  width: 10px;
+  height: 10px;
+}
+
+.node-branch-add:hover {
+  color: white;
+  background: rgba(6, 182, 212, 0.25);
+  border-color: rgba(6, 182, 212, 0.6);
+  box-shadow: 0 2px 8px rgba(6, 182, 212, 0.2);
+  transform: translateY(-1px);
+}
+
+.node-branch-add--true:hover {
+  color: #4ade80;
+  background: rgba(74, 222, 128, 0.15);
+  border-color: rgba(74, 222, 128, 0.5);
+  box-shadow: 0 2px 8px rgba(74, 222, 128, 0.25);
+}
+
+.node-branch-add--false:hover {
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.15);
+  border-color: rgba(248, 113, 113, 0.5);
+  box-shadow: 0 2px 8px rgba(248, 113, 113, 0.25);
+}
+
+.node-branch-add:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.node-branch-add:disabled:hover {
+  color: rgba(255, 255, 255, 0.7);
+  border-color: rgba(6, 182, 212, 0.3);
+  background: rgba(6, 182, 212, 0.1);
+  transform: none;
+  box-shadow: none;
+}
+
+/* ============================================
+   LEGACY - KEEP FOR COMPATIBILITY
+   ============================================ */
+
+.node-add {
+  display: none;
+}
+
+/* ============================================
+   RESPONSIVE - TABLET (< 768px)
+   ============================================ */
+
+@media (max-width: 768px) {
+  .node {
+    width: 160px;
+    height: 100px;
+  }
+
+  .node--branch {
+    width: 170px;
+    height: 110px;
+  }
+
+  .node-label {
+    font-size: 12px;
+    max-width: 100px;
+  }
+
+  .node-type {
+    font-size: 9px;
+  }
+
+  .node-add-internal {
+    padding: 5px 12px;
+    font-size: 10px;
+  }
+
+  .node-branch-add {
+    padding: 3px 6px;
+    font-size: 9px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE - MOBILE (< 480px)
+   ============================================ */
+
+@media (max-width: 480px) {
+  .node {
+    width: 140px;
+    height: 90px;
+  }
+
+  .node--branch {
+    width: 150px;
+    height: 100px;
+  }
+
+  .node-content {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    gap: 2px;
+  }
+
+  .node-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  .node-label {
+    font-size: 11px;
+    max-width: 90px;
+  }
+
+  .node-type {
+    font-size: 8px;
+  }
+
+  .node-add-internal {
+    padding: 4px 10px;
+    font-size: 9px;
+    gap: 4px;
+  }
+
+  .node-add-internal svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  .node-delete {
+    width: 18px;
+    height: 18px;
+    top: -6px;
+    right: -6px;
+  }
+
+  .node-delete svg {
+    width: 8px;
+    height: 8px;
+  }
+
+  .node-branch-buttons {
+    gap: var(--spacing-xs);
+  }
+
+  .node-branch-add {
+    padding: 3px 5px;
+    font-size: 8px;
+    gap: 2px;
+  }
+
+  .node-branch-add svg {
+    width: 8px;
+    height: 8px;
+  }
+}

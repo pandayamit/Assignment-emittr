@@ -1,0 +1,127 @@
+/**
+ * Connection Component Styles
+ * Premium Glowing Bezier Curves
+ */
+
+/* ============================================
+   CONNECTION PATH
+   ============================================ */
+
+.connection-path {
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  opacity: 0.85;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 0 2px var(--connection-color));
+}
+
+.connection--highlighted .connection-path {
+  stroke-width: 3.5;
+  opacity: 1;
+  filter: drop-shadow(0 0 6px var(--connection-color));
+}
+
+.connection:hover .connection-path {
+  opacity: 1;
+  stroke-width: 3;
+}
+
+/* ============================================
+   GLOW EFFECT
+   ============================================ */
+
+.connection-glow {
+  stroke-width: 12;
+  stroke-linecap: round;
+  opacity: 0.15;
+  filter: blur(8px);
+  transition: opacity 0.4s ease;
+}
+
+.connection--highlighted .connection-glow {
+  opacity: 0.35;
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.connection:hover .connection-glow {
+  opacity: 0.25;
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* ============================================
+   ANIMATED ARROW
+   ============================================ */
+
+.connection-arrow polygon {
+  opacity: 1;
+  filter: drop-shadow(0 0 4px var(--connection-color));
+  transition: all 0.3s ease;
+}
+
+.connection--highlighted .connection-arrow polygon {
+  filter: drop-shadow(0 0 8px var(--connection-color));
+}
+
+/* ============================================
+   END DOT
+   ============================================ */
+
+.connection-end-dot {
+  opacity: 0.9;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 0 4px var(--connection-color));
+}
+
+.connection--highlighted .connection-end-dot {
+  opacity: 1;
+  filter: drop-shadow(0 0 8px var(--connection-color));
+}
+
+/* ============================================
+   BRANCH LABELS
+   ============================================ */
+
+.connection-label-group {
+  transition: transform 0.25s ease;
+}
+
+.connection-label-group:hover {
+  transform: scale(1.08);
+}
+
+.connection-label-bg {
+  fill: rgba(10, 10, 15, 0.95);
+  stroke: rgba(6, 182, 212, 0.2);
+  stroke-width: 1;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+}
+
+.connection-label {
+  font-size: 9px;
+  font-weight: 800;
+  font-family: var(--font-family);
+  fill: var(--text-secondary);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.connection-label--true {
+  fill: #4ade80;
+  filter: drop-shadow(0 0 6px rgba(74, 222, 128, 0.6));
+}
+
+.connection-label--false {
+  fill: #f87171;
+  filter: drop-shadow(0 0 6px rgba(248, 113, 113, 0.6));
+}
